@@ -1,42 +1,17 @@
-import subprocess
 import os
 import time
 from datetime import datetime
 from pprint import pprint
-import requests
-import ssl
-from requests.adapters import HTTPAdapter
+import subprocess
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 import pickle
 
-
-# Кастомный HTTPAdapter для настройки SSL-контекста
-class KickAdapter(HTTPAdapter):
-    def init_poolmanager(self, *args, **kwargs):
-        ssl_context = ssl.create_default_context()
-        # Настраиваем контекст при необходимости
-        # ssl_context.options |= ssl.OP_NO_TICKET  # Оставьте закомментированным, если не требуется
-        kwargs["ssl_context"] = ssl_context
-        return super().init_poolmanager(*args, **kwargs)
-
-
-# Сессия с поддержкой кастомного SSL
-session = requests.Session()
-session.mount("https://", KickAdapter())
-
-
 # Функция для проверки доступности трансляции
 def is_stream_available(stream_url):
     try:
-        headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:126.0) Gecko/20100101 Firefox/126.0"}
-        response = session.get(stream_url, headers=headers)
-
-        if response.status_code == 200:
-            print("Stream page loaded successfully.")
-
         result = subprocess.run(
             ["streamlink", "--json", stream_url],
             capture_output=True,
@@ -47,7 +22,6 @@ def is_stream_available(stream_url):
     except Exception as e:
         print(f"Error checking stream availability: {e}")
         return False
-
 
 # Функция для скачивания стрима
 def download_stream(stream_url, output_file):
@@ -122,7 +96,6 @@ def upload_to_youtube(video_file, title, description, category_id="22", privacy_
 
     print("Video uploaded successfully.")
     print(f"Video ID: {response['id']}")
-
 
 if __name__ == "__main__":
     stream_url = "https://kick.com/nem3c"
