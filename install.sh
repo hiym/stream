@@ -1,13 +1,16 @@
 #!/bin/bash
 
-# Обновление системы и установка базовых инструментов
-echo "Обновляем список пакетов и устанавливаем зависимости..."
-sudo apt update && sudo apt upgrade -y
-sudo apt install -y python3 python3-pip python3-venv curl wget git ffmpeg
+# Обновление системы
+echo "Обновляем систему..."
+sudo pacman -Syu --noconfirm
 
-# Установка Streamlink
+# Установка базовых зависимостей
+echo "Устанавливаем базовые инструменты..."
+sudo pacman -S --noconfirm python python-pip python-virtualenv curl wget git ffmpeg
+
+# Установка Streamlink из AUR
 echo "Устанавливаем Streamlink..."
-sudo apt install -y streamlink
+yay -S --noconfirm streamlink
 
 # Создание виртуального окружения
 echo "Создаём виртуальное окружение..."
