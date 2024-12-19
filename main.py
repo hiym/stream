@@ -8,6 +8,7 @@ from googleapiclient.http import MediaFileUpload
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 import pickle
+from kick import get_m3u8_link
 
 # Функция для проверки доступности трансляции
 def is_stream_available(stream_url):

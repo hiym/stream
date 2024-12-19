@@ -1,5 +1,6 @@
-google-api-python-client
-google-auth-httplib2
-google-auth-oauthlib
-requests[socks]
-urllib3
+selenium==4.15.2
+google-api-python-client==2.96.0
+google-auth-oauthlib==1.0.0
+requests==2.31.0
+beautifulsoup4==4.12.2
+streamlink==6.2.0
